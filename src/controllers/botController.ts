@@ -81,7 +81,7 @@ export class BotController {
     // default command for invalid commands
     this.bot.onText(/.*/, (msg) => {
       const chatId = msg.chat.id
-      this.view.sendMessageToUser(chatId, USERS_MESSAGES.Invalid_Command)
+      this.view.sendMessageToUser(chatId, USERS_MESSAGES.INVALID_COMMAND)
     })
   }
 }
