@@ -27,7 +27,11 @@ export class BotModel {
 
   public async fetchNewsForRegions(regions: string[], currencies?: string[]): Promise<string> {
     const regionString = regions.join(',')
-    const url = `https://cryptopanic.com/api/v1/posts/?auth_token=${envConfig.NEWS_API_TOKEN}&regions=${regionString}&currencies=${currencies}`
+    let url = `https://cryptopanic.com/api/v1/posts/?auth_token=${envConfig.NEWS_API_TOKEN}&regions=${regionString}`
+
+    if (currencies) {
+      url += `&currencies=${currencies.join(',')}`
+    }
     const response = await axios.get(url)
     return this.decorateNews(response.data.results)
   }

@@ -25,7 +25,6 @@ export class BotController {
     const news = await this.model.fetchNewsForRegions(region, currency)
     this.view.sendNewsUpdate(chatId, news)
   }
-
   public init() {
     this.bot.onText(/\/start/, (msg) => {
       const chatId = msg.chat.id
@@ -78,10 +77,14 @@ export class BotController {
       await this.getNews(chatId, user?.regions || ['en'], user?.currencies)
     })
 
-    // default command for invalid commands
+    // default command
     this.bot.onText(/.*/, (msg) => {
-      const chatId = msg.chat.id
-      this.view.sendMessageToUser(chatId, USERS_MESSAGES.INVALID_COMMAND)
+      const command = msg.text?.toLowerCase()
+
+      if (command !== '/start' && command !== '/setregion' && command !== '/setcurrencies' && command !== '/news') {
+        const chatId = msg.chat.id
+        this.view.sendMessageToUser(chatId, USERS_MESSAGES.INVALID_COMMAND)
+      }
     })
   }
 }
