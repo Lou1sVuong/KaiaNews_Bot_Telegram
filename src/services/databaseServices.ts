@@ -3,7 +3,8 @@ import { Collection, Db, MongoClient } from 'mongodb'
 import { User } from '~/Schemas/userShemas'
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const uri = `mongodb+srv://${envConfig.dbUsername}:${envConfig.dbPassword}@cluster0.ccrzxzj.mongodb.net/`
+const uri = `mongodb+srv://${envConfig.dbUsername}:${envConfig.dbPassword}@cluster0.ccrzxzj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+
 class DatabaseServices {
   private client: MongoClient
   private db: Db
