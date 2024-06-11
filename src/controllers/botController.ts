@@ -4,6 +4,7 @@ import { BotView } from '../views/botView'
 import { RegionHandler } from '../handlers/regionHandler'
 import { CurrencyHandler } from '../handlers/currencyHandler'
 import databaseServices from '~/services/databaseServices'
+import { USERS_MESSAGES } from '~/constants/message'
 
 export class BotController {
   private bot: TelegramBot
@@ -75,6 +76,12 @@ export class BotController {
       const chatId = msg.chat.id
       const user = await databaseServices.users.findOne({ chatId })
       await this.getNews(chatId, user?.regions || ['en'], user?.currencies)
+    })
+
+    // default command for invalid commands
+    this.bot.onText(/.*/, (msg) => {
+      const chatId = msg.chat.id
+      this.view.sendMessageToUser(chatId, USERS_MESSAGES.Invalid_Command)
     })
   }
 }
